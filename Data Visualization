@@ -1,0 +1,66 @@
+library(ggplot2)
+
+
+data(diamonds)
+
+
+head(diamonds)
+
+
+library(ggplot2)
+
+
+data(diamonds)
+
+
+ggplot(diamonds, aes(x = price)) +
+  geom_histogram(fill = "yellow", color = "black", bins = 30) +
+  labs(title = "Histogram of Diamond Prices", x = "Price", y = "Frequency")
+
+
+library(ggplot2)
+
+data(diamonds)
+
+
+ggplot(diamonds, aes(x = cut, y = price, fill = cut)) +
+  geom_boxplot() +
+  labs(title = "Box Plot of Diamond Prices by Cut", x = "Cut", y = "Price")
+
+
+library(ggplot2)
+
+
+data(diamonds)
+
+
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(color = "gold", alpha = 0.5) +
+  labs(title = "Scatter Plot of Diamond Carat vs. Price", x = "Carat", y = "Price")
+
+
+library(ggplot2)
+library(reshape2)  # For the melt function
+
+
+data(diamonds)
+
+
+numeric_vars <- diamonds[, c("carat", "depth", "table", "price")]
+
+correlation_matrix <- cor(numeric_vars)
+
+mean_values <- colMeans(numeric_vars)
+median_values <- sapply(numeric_vars, median)
+
+
+correlation_melted <- melt(correlation_matrix)
+
+
+ggplot(correlation_melted, aes(x = Var1, y = Var2)) +
+  geom_tile(aes(fill = value)) +
+  geom_text(aes(label = round(value, 2)), vjust = 1) +
+  scale_fill_gradient(low = "red", high = "blue") +
+  labs(title = "Correlation, Mean, and Median Plot", x = "", y = "") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
